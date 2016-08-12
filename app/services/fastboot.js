@@ -53,6 +53,17 @@ const Shoebox = Ember.Object.extend({
     let valueString = el.textContent;
     if (!valueString) { return; }
 
+    valueString = valueString.replace(/((:?&amp;)|(:?&gt;)|(:?&lt;))/g, function(match) {
+      switch(match) {
+        case '&amp;':
+          return '&';
+        case '&lt;':
+          return '<';
+        case '&gt;':
+          return '>';
+      }
+    });
+
     shoeboxItem = JSON.parse(valueString);
     this.set(key, shoeboxItem);
 
